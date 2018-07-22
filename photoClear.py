@@ -3,7 +3,8 @@
 """ 
 功能：对照片按照拍摄时间进行归类 
 使用方法：将脚本和照片放于同一目录，双击运行脚本即可 
-作者：冰蓝
+原作者：冰蓝
+主要后续想处理osx中iphoto中的照片.
 """  
 
 import shutil  
@@ -44,7 +45,7 @@ def classifyPictures(path,destDir):
             originalFilename=filename;
             filename = os.path.join(root, filename)  
             pathAndFilename,fileExt = os.path.splitext(filename)  
-            if fileExt.lower() not in ('.jpg','.png','.mp4','.bmp',".cr2"):  
+            if fileExt.lower() not in ('.jpg','.png','.mp4','.bmp',".cr2",".avi",".mov",".mpg"):  
                 continue  
             info = "文件名: " + filename + " "  
             originalDateString=""  
@@ -88,7 +89,7 @@ def classifyPictures(path,destDir):
                     print "file exist! remove origin file:%s" % filename
                     continue
                 elif originFileSize<dstFileSize:
-                    print "file size less than dstFile, check:%s" %filename
+                    print "file size less than dstFile, check:%s,%s" %(filename,dst)
                     continue
                 else:
                     pass
