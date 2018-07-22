@@ -79,9 +79,20 @@ def classifyPictures(path,destDir):
             if not os.path.exists(pwd ):  
                 os.makedirs(pwd)  
             if os.path.exists(dst):
-                #文件已经存在， 判断这个文件的MD5
-                # print "file exist, pass"
-                continue
+                #文件已经存在， 判断这个文件的大小. 如果比当前文件小,考虑覆盖过去
+                dstFileSize=os.path.getsize(dst);
+                originFileSize=os.path.getsize(filename);
+                if(dstFileSize==originFileSize):
+                    # print "file exist, pass"
+                    os.remove(filename)
+                    print "file exist! remove origin file:%s" % filename
+                    continue
+                elif originFileSize<dstFileSize:
+                    print "file size less than dstFile, check:%s" %filename
+                    continue
+                else:
+                    pass
+
 
             print info, dst
 
