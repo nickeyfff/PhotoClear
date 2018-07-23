@@ -33,17 +33,27 @@ def getOriginalDate(filename):
     return time.strftime("%Y-%m-%d", time.localtime(state[-2]))  
 
 allNumber=0;
+masterPattern = re.compile(ur'.+/Masters/.*')
+
 def classifyPictures(path,destDir):  
+    global masterPattern;
     # print "path:"+path
     for root,dirs,files in os.walk(path,True):  
         batchNumber=0;
         for name in dirs:
-            print "pricess dir:"+os.path.join(root, name)
+            # print "pricess dir:"+os.path.join(root, name)
+            # print name;
             classifyPictures(os.path.join(root, name),destDir)
-        dirs[:] = []  
+        dirs[:] = []
+        
+
         for filename in files:
             originalFilename=filename;
             filename = os.path.join(root, filename)  
+            masterSearchObj=masterPattern.search(filename)
+            if( not masterSearchObj):
+                print "can't process %s" % filename;
+                continue
             pathAndFilename,fileExt = os.path.splitext(filename)  
             if fileExt.lower() not in ('.jpg','.png','.mp4','.bmp',".cr2",".avi",".mov",".mpg"):  
                 continue  
